@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 // The Below style of creating a connection does not work with .end() method?? strange
+
 // const dbConfig = {
 //     host: 'localhost',
 //     user: process.env.DB_USER,
@@ -17,11 +18,11 @@ require('dotenv').config();
 // ).promise // <== Enable promise based syntax
 
 // database config, Also using the dotenv npm to hide password and user in .env
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
     host: 'localhost',
     user: process.env.DB_USER,
     password: process.env.DB_PW,
     database: process.env.DB_NAME
-});
+})
 
-module.exports = connection;
+module.exports = db;

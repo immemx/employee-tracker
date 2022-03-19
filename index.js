@@ -1,7 +1,7 @@
 // Require statments
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const connection = require('./db/connection.js');
+const db = require('./db/connection');
 
 // Display the starting program message
 const startScreen = () => {
@@ -26,8 +26,8 @@ const prompt = () => {
 
         // Check to see if quit was selected
         if(answers.options === 'quit') {
-            connection.end();
-            return;
+            db.end();
+            return false;
         };
 
         // Pass Choice into switch function to respond to answer
@@ -37,20 +37,21 @@ const prompt = () => {
 
 // Switch for main prompt
 const sql_switch = (answer) => {
-
+    console.log(answer)
     // Switch processing the selection from inquirer and redirecting.
     switch (answer.options) {
     // Case for seeing ALL DEPT.
         case 'view all departments':
             const sqlAllDept = `SELECT * FROM department`
-            connection.query(sqlAllDept, (err, result) => {
+            db.query(sqlAllDept, (err, result) => {
                 if(err) {
                     console.log(`There has been an error: ${err}`)
                     return;
                 }
-                console.table(result)
+                console.table(result);
                 prompt();
             })
+            break;
     // Case for seeing ALL ROLES
         case 'view all roles':
             const sqlAllRoles = `SELECT * FROM role`
@@ -59,26 +60,61 @@ const sql_switch = (answer) => {
                     console.log(`There has been an error: ${err}`)
                     return;
                 }
-                console.table(result)
-                return;
+                console.table(result);
+                prompt();
             })
-            return;
+            break;
     // Case for seeing ALL EMPLE.
         case 'view all employees':
-            return;
+            const sqlAllEmployee = `SELECT * FROM employee`
+            db.query(sqlAllEmployee, (err, result) => {
+                if(err) {
+                    console.log(`There has been an error: ${err}`)
+                }
+                console.table(result);
+                prompt();
+            })
+            break;
     // Case for ADDing a DEPT.
         case 'add a department':
-            return;
+            // Pushing to function with seperate inquirer
+            addDept();
+            break;
 
         case 'add a role':
-            return;
+            addRole();
+            break;
 
         case 'add an employee':
-            return;
+            break;
 
         case 'update an employee role':
-            return;
+            break;
     };
+}
+
+const addDept = () => {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "deptName",
+            message: "What is the name of your new DEPARTMENT?",
+        }    
+    ])
+    .then((answer) => {
+        const insert = answer.deptName;
+        console.log(insert);
+        const sqlAddDept = `INSERT INTO department (name) VALUES ('${insert}')`
+
+        db.query(sqlAddDept, (err, result) => {
+            if(err) {
+                console.log(`There has been an error: ${err}`)
+            }
+            console.table(result);
+            console.log('Your new Department has been added!')
+            prompt();
+        });
+    })
 }
 
 startScreen();
