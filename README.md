@@ -4,6 +4,8 @@
     
 ## Description
 
+VIDEO : https://youtu.be/JNQ_ZqbvgZk
+
 This project is an example of my work with ORM!
 
 It uses technologies/skills such as:

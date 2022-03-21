@@ -201,7 +201,7 @@ const addEmployee = () => {
         }
     ])
     .then((answer) => {
-        const sqlAddRole = `INSERT INTO role (first_name, last_name, role_id, manager_id) VALUES ('${answer.first}', '${answer.last}', '${answer.roleid}', '${answer.managerid}')`
+        const sqlAddRole = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answer.first}', '${answer.last}', '${answer.roleid}', '${answer.managerid}')`
 
         db.query(sqlAddRole, (err, result) => {
             if(err) {
