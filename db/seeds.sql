@@ -22,6 +22,7 @@ VALUES
     ("Michael", "Scott", 2),
     ("Gabe", "Newell", 4);
 
+UPDATE employee SET manager_id = 1 WHERE role_id = 1;
 UPDATE employee SET manager_id = 1 WHERE role_id = 2;
 UPDATE employee SET manager_id = 1 WHERE role_id = 3;
 UPDATE employee SET manager_id = 1 WHERE role_id = 4;
